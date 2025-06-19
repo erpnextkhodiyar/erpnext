@@ -19,13 +19,15 @@
   "lead_name",
   "job_title",
   "gender",
-  "source",
   "col_break123",
   "lead_owner",
   "status",
   "customer",
   "type",
   "request_type",
+  "source_details_section",
+  "source",
+  "eventid",
   "contact_info_tab",
   "email_id",
   "website",
@@ -163,7 +165,8 @@
   {
    "fieldname": "source",
    "fieldtype": "Link",
-   "label": "Source",
+   "in_list_view": 1,
+   "label": "Lead Source",
    "oldfieldname": "source",
    "oldfieldtype": "Select",
    "options": "Lead Source"
@@ -510,13 +513,24 @@
    "fieldtype": "Tab Break",
    "label": "Connections",
    "show_dashboard": 1
+  },
+  {
+   "fieldname": "source_details_section",
+   "fieldtype": "Section Break",
+   "label": "Source Details"
+  },
+  {
+   "fieldname": "eventid",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Event ID"
   }
  ],
  "icon": "fa fa-user",
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2025-01-31 13:40:08.094759",
+ "modified": "2025-06-19 14:10:46.526796",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
@@ -575,6 +589,7 @@
    "role": "Sales User"
   }
  ],
+ "row_format": "Dynamic",
  "search_fields": "lead_name,lead_owner,status",
  "sender_field": "email_id",
  "sender_name_field": "lead_name",
