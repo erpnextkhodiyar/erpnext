@@ -10,6 +10,10 @@
  "email_append_to": 1,
  "engine": "InnoDB",
  "field_order": [
+  "source_details_section",
+  "source",
+  "eventid",
+  "section_break_rnza",
   "naming_series",
   "salutation",
   "first_name",
@@ -25,9 +29,6 @@
   "customer",
   "type",
   "request_type",
-  "source_details_section",
-  "source",
-  "eventid",
   "contact_info_tab",
   "email_id",
   "website",
@@ -105,8 +106,6 @@
   {
    "fieldname": "company_name",
    "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Organization Name",
    "mandatory_depends_on": "eval: !(doc.first_name)",
    "oldfieldname": "company_name",
@@ -166,6 +165,7 @@
    "fieldname": "source",
    "fieldtype": "Link",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Lead Source",
    "oldfieldname": "source",
    "oldfieldtype": "Select",
@@ -291,8 +291,6 @@
   {
    "fieldname": "territory",
    "fieldtype": "Link",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Territory",
    "oldfieldname": "territory",
    "oldfieldtype": "Link",
@@ -426,8 +424,6 @@
   {
    "fieldname": "job_title",
    "fieldtype": "Data",
-   "in_list_view": 1,
-   "in_standard_filter": 1,
    "label": "Job Title"
   },
   {
@@ -523,14 +519,19 @@
    "fieldname": "eventid",
    "fieldtype": "Data",
    "in_list_view": 1,
+   "in_standard_filter": 1,
    "label": "Event ID"
+  },
+  {
+   "fieldname": "section_break_rnza",
+   "fieldtype": "Section Break"
   }
  ],
  "icon": "fa fa-user",
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2025-06-19 14:10:46.526796",
+ "modified": "2025-06-19 16:36:02.852433",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
@@ -587,6 +588,12 @@
    "read": 1,
    "report": 1,
    "role": "Sales User"
+  },
+  {
+   "create": 1,
+   "read": 1,
+   "role": "Enquiry",
+   "write": 1
   }
  ],
  "row_format": "Dynamic",
