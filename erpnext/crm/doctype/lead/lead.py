@@ -37,7 +37,7 @@ class Lead(SellingController, CRMNote):
 		customer: DF.Link | None
 		disabled: DF.Check
 		email_id: DF.Data | None
-		eventid: DF.Data | None
+		event: DF.Link | None
 		fax: DF.Data | None
 		first_name: DF.Data | None
 		gender: DF.Link | None
@@ -68,6 +68,7 @@ class Lead(SellingController, CRMNote):
 		title: DF.Data | None
 		type: DF.Literal["", "Client", "Channel Partner", "Consultant"]
 		unsubscribed: DF.Check
+		visitor: DF.Link | None
 		website: DF.Data | None
 		whatsapp_no: DF.Data | None
 	# end: auto-generated types
