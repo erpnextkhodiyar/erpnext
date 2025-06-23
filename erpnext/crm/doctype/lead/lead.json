@@ -14,6 +14,7 @@
   "source",
   "event",
   "visitor",
+  "branch",
   "section_break_rnza",
   "naming_series",
   "salutation",
@@ -535,13 +536,20 @@
    "label": "Visitor",
    "options": "Visitor Information",
    "read_only": 1
+  },
+  {
+   "fieldname": "branch",
+   "fieldtype": "Link",
+   "hidden": 1,
+   "label": "Branch",
+   "options": "Center Information"
   }
  ],
  "icon": "fa fa-user",
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2025-06-19 17:33:36.410950",
+ "modified": "2025-06-23 09:39:56.798790",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
@@ -603,6 +611,18 @@
    "create": 1,
    "read": 1,
    "role": "Enquiry",
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Counsellor",
+   "share": 1,
    "write": 1
   }
  ],

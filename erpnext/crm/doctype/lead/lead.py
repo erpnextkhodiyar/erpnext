@@ -29,6 +29,7 @@ class Lead(SellingController, CRMNote):
 
 		annual_revenue: DF.Currency
 		blog_subscriber: DF.Check
+		branch: DF.Link | None
 		campaign_name: DF.Link | None
 		city: DF.Data | None
 		company: DF.Link | None
