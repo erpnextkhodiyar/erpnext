@@ -119,8 +119,7 @@
    "label": "Email",
    "oldfieldname": "email_id",
    "oldfieldtype": "Data",
-   "options": "Email",
-   "search_index": 1
+   "options": "Email"
   },
   {
    "fieldname": "col_break123",
@@ -549,7 +548,7 @@
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2025-06-23 09:39:56.798790",
+ "modified": "2025-06-24 15:50:17.206425",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
