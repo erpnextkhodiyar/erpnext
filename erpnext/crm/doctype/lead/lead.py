@@ -147,13 +147,13 @@ class Lead(SellingController, CRMNote):
 					frappe.bold(get_link_to_form("Lead", lead.name)) for lead in duplicate_leads
 				]
 
-		#		if duplicate_leads:
-		#			frappe.throw(
-		#				_("Email Address must be unique, it is already used in {0}").format(
-		#					comma_and(duplicate_leads)
-		#				),
-		#				frappe.DuplicateEntryError,
-		#			)
+				if duplicate_leads:
+					frappe.throw(
+						_("Email Address must be unique, it is already used in {0}").format(
+							comma_and(duplicate_leads)
+						),
+						frappe.DuplicateEntryError,
+					)
 
 	def validate_email_id(self):
 		if self.email_id:
