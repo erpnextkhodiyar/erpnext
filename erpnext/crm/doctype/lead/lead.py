@@ -42,6 +42,8 @@ class Lead(SellingController, CRMNote):
 		fax: DF.Data | None
 		first_name: DF.Data | None
 		gender: DF.Link | None
+		gift_code: DF.ReadOnly | None
+		gift_status: DF.Literal["-", "Pending", "Given"]
 		image: DF.AttachImage | None
 		industry: DF.Link | None
 		job_title: DF.Data | None
