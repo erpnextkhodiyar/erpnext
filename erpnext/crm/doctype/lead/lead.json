@@ -562,7 +562,7 @@
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2025-06-28 16:03:19.623456",
+ "modified": "2025-06-30 18:39:21.387777",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
@@ -635,6 +635,18 @@
    "read": 1,
    "report": 1,
    "role": "Counsellor",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "Center Admin",
    "share": 1,
    "write": 1
   }
