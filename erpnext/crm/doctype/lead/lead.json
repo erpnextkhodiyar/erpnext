@@ -562,7 +562,7 @@
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2025-06-30 18:39:21.387777",
+ "modified": "2025-07-01 22:44:39.377446",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
@@ -660,5 +660,6 @@
  "sort_order": "DESC",
  "states": [],
  "subject_field": "title",
- "title_field": "title"
+ "title_field": "title",
+ "track_changes": 1
 }
