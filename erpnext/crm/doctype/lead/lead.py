@@ -15,7 +15,7 @@ from erpnext.accounts.party import set_taxes
 from erpnext.controllers.selling_controller import SellingController
 from erpnext.crm.utils import CRMNote, copy_comments, link_communications, link_open_events
 from erpnext.selling.doctype.customer.customer import parse_full_name
-
+from datetime import datetime
 
 class Lead(SellingController, CRMNote):
 	# begin: auto-generated types
@@ -26,6 +26,7 @@ class Lead(SellingController, CRMNote):
 	if TYPE_CHECKING:
 		from erpnext.crm.doctype.crm_note.crm_note import CRMNote
 		from frappe.types import DF
+		from khodiyar_it_skill_institute.khodiyar_it_skill_management_institute.doctype.followup_information.followup_information import FollowUpInformation
 
 		annual_revenue: DF.Currency
 		blog_subscriber: DF.Check
@@ -55,7 +56,9 @@ class Lead(SellingController, CRMNote):
 		middle_name: DF.Data | None
 		mobile_no: DF.Data | None
 		naming_series: DF.Literal["CRM-LEAD-.YYYY.-"]
+		next_followup: DF.Table[FollowUpInformation]
 		no_of_employees: DF.Literal["1-10", "11-50", "51-200", "201-500", "501-1000", "1000+"]
+		no_of_followup: DF.Data | None
 		notes: DF.Table[CRMNote]
 		phone: DF.Data | None
 		phone_ext: DF.Data | None
@@ -532,3 +535,69 @@ def add_lead_to_prospect(lead, prospect):
 		title=_("Lead -> Prospect"),
 		indicator="green",
 	)
+
+# In Lead.py (or via a custom app)
+def get_indicator(doc):
+    if doc.next_followup:
+        upcoming = [row for row in doc.next_followup if row.next_followup_date and row.next_followup_date <= frappe.utils.today()]
+        if upcoming:
+            return _("Follow-up Due"), "orange", "next_followup_date,<=,{}".format(frappe.utils.today())
+    return None
+
+@frappe.whitelist()
+def update_next_followup_summary(lead_doc):
+    if lead_doc.next_followup:
+        lead_doc.no_of_followup = len(lead_doc.next_followup or [])
+frappe.db.commit
+
+def get_next_followup_datetime(row):
+    if row.next_follow_up_date and row.next_follow_up_hour:
+        # Combine date and hour string into full datetime
+        dt_str = f"{row.next_follow_up_date} {row.next_follow_up_hour}"
+        return datetime.strptime(dt_str, "%Y-%m-%d %I:%M %p")  # 12-hour format with AM/PM
+    return None
+
+@frappe.whitelist()
+def get_my_upcoming_followups():
+    
+    now = frappe.utils.now_datetime()
+    user = frappe.session.user
+    branch = frappe.db.get_value("User",user, "branch")
+	# Get roles of current user
+    roles = frappe.get_roles(user)
+    # Step 1: Get all leads assigned to current user
+    assigned_leads = frappe.get_all("ToDo", 
+        filters={
+            "reference_type": "Lead",
+            "allocated_to": user
+           
+        },
+        fields=["reference_name"]
+    )
+
+    lead_ids = [d.reference_name for d in assigned_leads]
+
+    if "Center Admin" in roles:
+        branch_leads = frappe.get_all("Lead", 
+            filters={"branch": branch},
+            fields=["name"]
+        )
+        lead_ids = [d.name for d in branch_leads]
+
+    # Step 2: Fetch follow-ups from those leads
+    upcoming = []
+    for lead_id in lead_ids:
+        lead = frappe.get_doc("Lead", lead_id)
+        for row in lead.next_followup:
+            if row.next_follow_up_date and get_next_followup_datetime(row) > now:
+                upcoming.append({
+                    "lead_name": lead.lead_name,
+                    "lead_id": lead.name,
+                    "datetime": get_next_followup_datetime(row)
+	            })
+
+    # Sort by soonest
+    upcoming.sort(key=lambda x: x["datetime"])
+    return upcoming[:5]
+
+
