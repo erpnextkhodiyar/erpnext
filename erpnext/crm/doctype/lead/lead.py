@@ -589,11 +589,11 @@ def get_my_upcoming_followups():
     for lead_id in lead_ids:
         lead = frappe.get_doc("Lead", lead_id)
         for row in lead.next_followup:
-            if row.next_follow_up_date and get_next_followup_datetime(row) > now:
+            if row.next_follow_up_date and row.next_follow_up_date > now:
                 upcoming.append({
                     "lead_name": lead.lead_name,
                     "lead_id": lead.name,
-                    "datetime": get_next_followup_datetime(row)
+                    "datetime": row.next_follow_up_date
 	            })
 
     # Sort by soonest

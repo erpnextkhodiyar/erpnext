@@ -575,6 +575,7 @@
   {
    "fieldname": "no_of_followup",
    "fieldtype": "Data",
+   "hidden": 1,
    "in_list_view": 1,
    "label": "No of Followup",
    "read_only": 1
@@ -584,7 +585,7 @@
  "idx": 5,
  "image_field": "image",
  "links": [],
- "modified": "2025-07-08 09:52:21.999940",
+ "modified": "2025-07-09 11:34:55.477133",
  "modified_by": "Administrator",
  "module": "CRM",
  "name": "Lead",
