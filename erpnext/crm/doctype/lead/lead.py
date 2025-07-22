@@ -69,7 +69,7 @@ class Lead(SellingController, CRMNote):
 		salutation: DF.Link | None
 		source: DF.Link | None
 		state: DF.Data | None
-		status: DF.Literal["Lead", "Open", "Replied", "Do Not Contact", "Converted"]
+		status: DF.Literal["Lead", "High Prospect", "Medium Prospect", "Low Prospect", "Counselling Done", "Technical Demo Pending", "Technical Demo Done", "Future Prospect", "Won", "Closed"]
 		territory: DF.Link | None
 		title: DF.Data | None
 		type: DF.Literal["", "Client", "Channel Partner", "Consultant"]

@@ -25,7 +25,7 @@ erpnext.LeadController = class LeadController extends frappe.ui.form.Controller 
 		let doc = this.frm.doc;
 		erpnext.toggle_naming_series();
 
-		if (!this.frm.is_new() && doc.__onload && doc.status == "Converted") {
+		if (!this.frm.is_new() && doc.__onload && doc.status == "Won") {
 			this.frm.add_custom_button(__("Create Student Info"), this.make_customer.bind(this));
 		}
 
