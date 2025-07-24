@@ -7,9 +7,7 @@ cur_frm.email_field = "email_id";
 erpnext.LeadController = class LeadController extends frappe.ui.form.Controller {
 	setup() {
 		this.frm.make_methods = {
-			Customer: this.make_customer.bind(this),
-			Quotation: this.make_quotation.bind(this),
-			Opportunity: this.make_opportunity.bind(this),
+			StudentEnquiry: this.make_customer.bind(this),
 		};
 
 		// For avoiding integration issues.
@@ -27,20 +25,8 @@ erpnext.LeadController = class LeadController extends frappe.ui.form.Controller 
 		let doc = this.frm.doc;
 		erpnext.toggle_naming_series();
 
-		if (!this.frm.is_new() && doc.__onload && !doc.__onload.is_customer) {
-			this.frm.add_custom_button(__("Customer"), this.make_customer.bind(this), __("Create"));
-			this.frm.add_custom_button(__("Opportunity"), this.make_opportunity.bind(this), __("Create"));
-			this.frm.add_custom_button(__("Quotation"), this.make_quotation.bind(this), __("Create"));
-			if (!doc.__onload.linked_prospects.length) {
-				this.frm.add_custom_button(__("Prospect"), this.make_prospect.bind(this), __("Create"));
-				this.frm.add_custom_button(
-					__("Add to Prospect"),
-					() => {
-						this.add_lead_to_prospect(this.frm);
-					},
-					__("Action")
-				);
-			}
+		if (!this.frm.is_new() && doc.__onload && doc.status == "Won") {
+			this.frm.add_custom_button(__("Create Student Info"), this.make_customer.bind(this));
 		}
 
 		if (!this.frm.is_new()) {
@@ -87,7 +73,7 @@ erpnext.LeadController = class LeadController extends frappe.ui.form.Controller 
 
 	make_customer() {
 		frappe.model.open_mapped_doc({
-			method: "erpnext.crm.doctype.lead.lead.make_customer",
+			method: "erpnext.crm.doctype.lead.lead.create_student_enquiry",
 			frm: this.frm,
 		});
 	}

@@ -69,7 +69,7 @@ class Lead(SellingController, CRMNote):
 		salutation: DF.Link | None
 		source: DF.Link | None
 		state: DF.Data | None
-		status: DF.Literal["Lead", "Open", "Replied", "Opportunity", "Quotation", "Lost Quotation", "Interested", "Converted", "Do Not Contact"]
+		status: DF.Literal["Lead", "High Prospect", "Medium Prospect", "Low Prospect", "Counselling Done", "Technical Demo Pending", "Technical Demo Done", "Future Prospect", "Won", "Closed"]
 		territory: DF.Link | None
 		title: DF.Data | None
 		type: DF.Literal["", "Client", "Channel Partner", "Consultant"]
@@ -307,39 +307,30 @@ class Lead(SellingController, CRMNote):
 
 
 @frappe.whitelist()
-def make_customer(source_name, target_doc=None):
-	return _make_customer(source_name, target_doc)
+def create_student_enquiry(source_name, target_doc=None):
+	return _create_student_enquiry(source_name, target_doc)
 
 
-def _make_customer(source_name, target_doc=None, ignore_permissions=False):
-	def set_missing_values(source, target):
-		if source.company_name:
-			target.customer_type = "Company"
-			target.customer_name = source.company_name
-		else:
-			target.customer_type = "Individual"
-			target.customer_name = source.lead_name
-
-		target.customer_group = frappe.db.get_default("Customer Group")
-
+def _create_student_enquiry(source_name, target_doc=None, ignore_permissions=False):
+	
 	doclist = get_mapped_doc(
 		"Lead",
 		source_name,
 		{
 			"Lead": {
-				"doctype": "Customer",
+				"doctype": "Student Enquiry",
 				"field_map": {
-					"name": "lead_name",
-					"company_name": "customer_name",
-					"contact_no": "phone_1",
-					"fax": "fax_1",
+					"enquiry_id":"name",
+					"first_name": "first_name",
+					"last_name": "last_name",
+					"mobile_no": "mobile_no",
+					"st_email": "email_id",
 				},
-				"field_no_map": ["disabled"],
+				
 			}
 		},
 		target_doc,
-		set_missing_values,
-		ignore_permissions=ignore_permissions,
+		ignore_permissions=ignore_permissions
 	)
 
 	return doclist
@@ -589,11 +580,11 @@ def get_my_upcoming_followups():
     for lead_id in lead_ids:
         lead = frappe.get_doc("Lead", lead_id)
         for row in lead.next_followup:
-            if row.next_follow_up_date and get_next_followup_datetime(row) > now:
+            if row.next_follow_up_date and row.next_follow_up_date > now:
                 upcoming.append({
                     "lead_name": lead.lead_name,
                     "lead_id": lead.name,
-                    "datetime": get_next_followup_datetime(row)
+                    "datetime": row.next_follow_up_date
 	            })
 
     # Sort by soonest
